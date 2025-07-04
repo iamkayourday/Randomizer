@@ -1,12 +1,52 @@
-# React + Vite
+# Group Randomizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Group Randomizer Demo](demo.gif)
 
-Currently, two official plugins are available:
+A responsive React application that randomly divides participants into customizable groups with export functionality.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- **Dual Grouping Methods**:
+  - Set number of groups or participants per group
+  - Automatic calculation of the complementary value
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Interactive Experience**:
+  - Visual spinning animation during randomization
+  - Color-coded group display
+  - Light/dark mode support
+
+- **Multiple Export Options**:
+  - 📄 PDF, 🖼️ PNG/JPEG, 📊 CSV exports
+  - 📋 Copy to clipboard
+  - 🖨️ Print functionality
+
+- **Customization**:
+  - 🎨 Multiple color themes
+  - ✏️ Editable event titles
+  - 🔔 Sound effects toggle
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v16+ recommended)
+- npm or yarn
+
+### Installation
+```bash
+git clone https://github.com/yourusername/group-randomizer.git
+cd group-randomizer
+npm install
+
+npm run dev
+## 🛠️ Tech Stack
+### Frontend:
+- React 18
+- Tailwind CSS
+- Framer Motion (animations)
+- Export Libraries:
+- html-to-image
+- jspdf
+- html2canvas
+- Icons:
+- Font Awesome
+
