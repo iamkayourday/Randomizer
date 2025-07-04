@@ -301,8 +301,9 @@ const App = () => {
                     min="1"
                     className={`w-full px-4 py-3 rounded-lg border-none ${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
                     value={groupingMethod === 'groups' ? numberOfGroups : participantsPerGroup}
+                    // For Number of Groups input
                     onChange={(e) => {
-                      const value = Math.max(1, parseInt(e.target.value) || 0);
+                      const value = e.target.value === '' ? '' : Math.max(1, parseInt(e.target.value) || 1);
                       if (groupingMethod === 'groups') {
                         setNumberOfGroups(value);
                       } else {
