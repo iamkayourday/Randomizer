@@ -2,18 +2,10 @@ import React, { useState, useEffect } from 'react';
 import * as echarts from 'echarts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faRandom, 
-  faSun, 
-  faMoon, 
-  faSyncAlt, 
-  faVolumeUp, 
-  faVolumeMute, 
-  faArrowLeft, 
-  faFilePdf, 
-  faFileImage, 
-  faFileCsv, 
-  faCopy, 
-  faPrint 
+  faRandom, faSun, faMoon, faSyncAlt, 
+  faVolumeUp, faVolumeMute, faArrowLeft, 
+  faFilePdf, faFileImage, faFileCsv, 
+  faCopy, faPrint, faInfoCircle, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { toPng, toJpeg } from 'html-to-image';
 import { jsPDF } from 'jspdf';
@@ -31,6 +23,7 @@ const App = () => {
   const [spinning, setSpinning] = useState(false);
   const [groups, setGroups] = useState([]);
   const [showResults, setShowResults] = useState(false);
+   const [showInstructions, setShowInstructions] = useState(true);
 
   const themes = {
     blue: 'bg-blue-500',
@@ -220,24 +213,78 @@ const App = () => {
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
       {/* Header */}
-      <header className={`px-8 py-4 flex justify-between items-center ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm`}>
+      {/* Header */}
+      <header className={`px-4 sm:px-8 py-4 flex justify-between items-center ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm sticky top-0 z-10`}>
         <div className="flex items-center">
-          <FontAwesomeIcon icon={faRandom} className="text-2xl mr-2 text-blue-500" />
+          <FontAwesomeIcon icon={faRandom} className={`text-2xl mr-2 ${themes[selectedTheme].text}`} />
           <h1 className="text-xl font-bold">Group Randomizer</h1>
         </div>
         <div className="flex items-center space-x-4">
           <button
-            className="text-sm flex items-center cursor-pointer !rounded-button whitespace-nowrap"
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => setShowInstructions(!showInstructions)}
+            className={`p-2 rounded-full ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+            aria-label="Instructions"
           >
-            {darkMode ? (
-              <><FontAwesomeIcon icon={faSun} className="mr-2" /> Light Mode</>
-            ) : (
-              <><FontAwesomeIcon icon={faMoon} className="mr-2" /> Dark Mode</>
-            )}
+            <FontAwesomeIcon icon={showInstructions ? faTimes : faInfoCircle} />
+          </button>
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="text-sm flex items-center p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-500"
+            aria-label="Toggle dark mode"
+          >
+            {darkMode ? <FontAwesomeIcon icon={faSun} /> : <FontAwesomeIcon icon={faMoon} />}
           </button>
         </div>
       </header>
+
+      {/* Instructions Panel */}
+      {showInstructions && (
+        <div className={`mx-4 sm:mx-auto max-w-5xl p-6 rounded-lg shadow-md mb-6 ${darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">How to Use Group Randomizer</h2>
+            <button 
+              onClick={() => setShowInstructions(false)}
+              className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-semibold text-lg mb-2">1. Enter Participant Names</h3>
+              <p className="text-sm">Type or paste names separated by commas or new lines. Example:</p>
+              <pre className={`p-2 rounded mt-1 text-sm ${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                John Doe, Jane Smith{'\n'}Mike Johnson{'\n'}Sarah Williams
+              </pre>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg mb-2">2. Choose Grouping Method</h3>
+              <p className="text-sm">Select either:</p>
+              <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
+                <li><strong>Number of Groups</strong> - Specify how many groups you want</li>
+                <li><strong>Participants per Group</strong> - Specify how many people in each group</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg mb-2">3. Create Groups</h3>
+              <p className="text-sm">Click "Create Groups" to randomly distribute participants. Watch the spinning animation!</p>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg mb-2">4. Export Results</h3>
+              <p className="text-sm">After groups are created, you can:</p>
+              <ul className="list-disc pl-5 mt-1 text-sm space-y-1">
+                <li>Save as PDF/Image/CSV</li>
+                <li>Copy to clipboard</li>
+                <li>Print directly</li>
+                <li>Regenerate groups if needed</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         {!showResults ? (
